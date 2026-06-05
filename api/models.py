@@ -1,31 +1,5 @@
 from django.db import models
 from django.conf import settings
-import uuid
-
-
-class Contributor(models.Model):
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="contributions",
-    )
-    project = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="contributors",
-    )
-    created_time = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "project"], name="unique_contributor_per_project"
-            )
-        ]
-
-    def __str__(self):
-        return f"{self.author} -> {self.project}"
 
 
 class Project(models.Model):
@@ -54,6 +28,31 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Contributor(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="contributions",
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name="contributors",
+    )
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "project"], name="unique_contributor_per_project"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user} -> {self.project}"
 
 
 class Issue(models.Model):
