@@ -7,6 +7,7 @@ from rest_framework.serializers import (
 )
 
 from api.models import Project, Contributor, Issue, Comment
+from authentication.serializers import UserSerializer
 
 
 class ContributorListSerializer(ModelSerializer):
@@ -15,7 +16,7 @@ class ContributorListSerializer(ModelSerializer):
 
     class Meta:
         model = Contributor
-        fields = ["user", "created_time"]
+        fields = ["id", "user", "project", "created_time"]
 
 
 class ContributorSerializer(ModelSerializer):
@@ -27,6 +28,7 @@ class ContributorSerializer(ModelSerializer):
 
 class ProjectSerializer(ModelSerializer):
 
+    author = UserSerializer(read_only=True)
     contributors = SerializerMethodField()
 
     class Meta:
@@ -40,6 +42,7 @@ class ProjectSerializer(ModelSerializer):
             "created_time",
             "contributors",
         ]
+        read_only_fields = ["author", "created_time"]
 
     def get_contributors(self, instance):
         queryset = instance.contributors.all()

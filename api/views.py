@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from api.permissions import IsAuthorOrReadOnly
+from django.db import transaction
 
 from api.serializers import (
     ProjectSerializer,
@@ -12,10 +12,15 @@ from api.models import Project, Contributor, Issue, Comment
 
 class ProjectViewset(ModelViewSet):
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthorOrReadOnly]
 
     def get_queryset(self):
         return Project.objects.all()
+
+    @transaction.atomic
+    def perform_create(self, serializer):
+        project = serializer.save(author=self.request.user)
+
+        Contributor.objects.create(user=project.author, project=project)
 
 
 class ContributorViewset(ModelViewSet):
