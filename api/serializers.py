@@ -52,9 +52,12 @@ class ProjectSerializer(ModelSerializer):
 
 class IssueSerializer(ModelSerializer):
 
+    author = UserSerializer(read_only=True)
+
     class Meta:
         model = Issue
         fields = [
+            "id",
             "title",
             "description",
             "tag",
@@ -69,6 +72,8 @@ class IssueSerializer(ModelSerializer):
 
 class CommentSerializer(ModelSerializer):
 
+    author = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
-        fields = ["description", "author", "issue", "created_time"]
+        fields = ["id", "description", "author", "issue", "created_time"]

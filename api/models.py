@@ -70,12 +70,12 @@ class Issue(models.Model):
     PRIORITY_CHOICES = [(LOW, "Low"), (MEDIUM, "Medium"), (HIGH, "High")]
 
     TO_DO = "To do"
-    IN_PORGRESS = "In progress"
+    IN_PROGRESS = "In progress"
     FINISHED = "Finished"
 
     STATUS_CHOICES = [
         (TO_DO, "To do"),
-        (IN_PORGRESS, "In_prgoress"),
+        (IN_PROGRESS, "In_progress"),
         (FINISHED, "Finished"),
     ]
 
