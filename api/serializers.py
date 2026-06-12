@@ -7,17 +7,15 @@ from rest_framework.serializers import (
 )
 
 from api.models import Project, Contributor, Issue, Comment
-from authentication.serializers import UserSerializer
 
 
 class ContributorListSerializer(ModelSerializer):
 
     user = StringRelatedField()
-    project = StringRelatedField()
 
     class Meta:
         model = Contributor
-        fields = ["user", "project", "created_time"]
+        fields = ["user", "created_time"]
 
 
 class ContributorSerializer(ModelSerializer):
