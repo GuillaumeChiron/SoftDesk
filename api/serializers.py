@@ -19,7 +19,17 @@ class ContributorListSerializer(ModelSerializer):
         fields = ["user", "created_time"]
 
 
+class ProjectListSerializer(ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ["title", "type", "description"]
+
+
 class ContributorSerializer(ModelSerializer):
+
+    user = UserSerializer(read_only=True)
+    project = ProjectListSerializer()
 
     class Meta:
         model = Contributor
