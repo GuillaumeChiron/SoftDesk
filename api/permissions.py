@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from api.models import Project
 
 
 class IsProjectAuthorOrContributorReadOnly(BasePermission):
@@ -32,10 +33,24 @@ class IsCommentAuthorOrProjectAuthor(BasePermission):
 
 class IsProjectAuthorForContributor(BasePermission):
 
+    def has_permission(self, request, view):
+        if request.method != "POST":
+            return True
+
+        project_id = request.data.get("project")
+
+        if not project_id:
+            return False
+
+        return Project.objects.filter(id=project_id, author=request.user).exists()
+
     def has_object_permission(self, request, view, obj):
         project = obj.project
 
         if request.method in SAFE_METHODS:
-            return project.contributors.filter(user=request.user).exist()
+            return project.contributors.filter(user=request.user).exists()
+
+        if request.method == "DELETE" and obj.user == project.author:
+            return False
 
         return project.author == request.user
