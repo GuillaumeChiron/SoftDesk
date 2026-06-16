@@ -10,30 +10,14 @@ from api.models import Project, Contributor, Issue, Comment
 from authentication.serializers import UserSerializer
 
 
-class ContributorListSerializer(ModelSerializer):
-
-    user = StringRelatedField()
-
-    class Meta:
-        model = Contributor
-        fields = ["user", "created_time"]
-
-
-class ProjectListSerializer(ModelSerializer):
-
-    class Meta:
-        model = Project
-        fields = ["title", "type", "description"]
-
-
 class ContributorSerializer(ModelSerializer):
 
-    user = UserSerializer(read_only=True)
-    project = ProjectListSerializer()
+    username = CharField(source="user.username", read_only=True)
+    project_title = CharField(source="project.title", read_only=True)
 
     class Meta:
         model = Contributor
-        fields = ["user", "project", "created_time"]
+        fields = ["id", "user", "username", "project", "project_title", "created_time"]
 
 
 class ProjectSerializer(ModelSerializer):
@@ -56,7 +40,7 @@ class ProjectSerializer(ModelSerializer):
 
     def get_contributors(self, instance):
         queryset = instance.contributors.all()
-        serializer = ContributorListSerializer(queryset, many=True)
+        serializer = ContributorSerializer(queryset, many=True)
         return serializer.data
 
 
@@ -78,6 +62,7 @@ class IssueSerializer(ModelSerializer):
             "assign",
             "created_time",
         ]
+        read_only_fields = ["author", "created_time"]
 
 
 class CommentSerializer(ModelSerializer):
@@ -87,3 +72,4 @@ class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = ["uuid", "description", "author", "issue", "created_time"]
+        read_only_fields = ["author", "created_time"]

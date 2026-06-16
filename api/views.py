@@ -33,7 +33,7 @@ class ProjectViewset(ModelViewSet):
 
 class ContributorViewset(ModelViewSet):
     serializer_class = ContributorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsProjectAuthorForContributor]
 
     def get_queryset(self):
         return Contributor.objects.filter(project__contributors__user=self.request.user)
@@ -46,6 +46,9 @@ class IssueViewset(ModelViewSet):
     def get_queryset(self):
         return Issue.objects.filter(project__contributors__user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 class CommentViewset(ModelViewSet):
     serializer_class = CommentSerializer
@@ -55,3 +58,6 @@ class CommentViewset(ModelViewSet):
         return Comment.objects.filter(
             issue__project__contributors__user=self.request.user
         )
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
