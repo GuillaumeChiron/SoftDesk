@@ -1,13 +1,20 @@
 from rest_framework.serializers import (
     ModelSerializer,
     SerializerMethodField,
-    ValidationError,
     CharField,
-    StringRelatedField,
 )
 
 from api.models import Project, Contributor, Issue, Comment
 from authentication.serializers import UserSerializer
+
+
+class ContributorListSerializer(ModelSerializer):
+
+    username = CharField(source="user.username", read_only=True)
+
+    class Meta:
+        model = Contributor
+        fields = ["id", "user", "username", "created_time"]
 
 
 class ContributorSerializer(ModelSerializer):
@@ -40,7 +47,7 @@ class ProjectSerializer(ModelSerializer):
 
     def get_contributors(self, instance):
         queryset = instance.contributors.all()
-        serializer = ContributorSerializer(queryset, many=True)
+        serializer = ContributorListSerializer(queryset, many=True)
         return serializer.data
 
 
