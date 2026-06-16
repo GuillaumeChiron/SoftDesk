@@ -76,4 +76,4 @@ class CommentSerializer(ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ["id", "description", "author", "issue", "created_time"]
+        fields = ["uuid", "description", "author", "issue", "created_time"]
