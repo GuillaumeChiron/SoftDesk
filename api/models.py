@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+import uuid
 
 
 class Project(models.Model):
@@ -106,6 +107,7 @@ class Issue(models.Model):
 
 
 class Comment(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     description = models.TextField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
