@@ -54,6 +54,7 @@ class ProjectSerializer(ModelSerializer):
 
 class IssueSerializer(ModelSerializer):
 
+    project_name = CharField(source="project.title", read_only=True)
     author_name = CharField(source="author.username", read_only=True)
     assign_name = CharField(source="assign.username", read_only=True)
 
@@ -67,6 +68,7 @@ class IssueSerializer(ModelSerializer):
             "priority",
             "status",
             "project",
+            "project_name",
             "author",
             "author_name",
             "assign",
