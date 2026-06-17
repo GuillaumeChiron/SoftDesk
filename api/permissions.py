@@ -43,13 +43,15 @@ class IsCommentAuthorOrContributorReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method != "POST":
             return True
-        
+
         issue_id = request.data.get("issue")
 
         if not issue_id:
             return False
-        
-        return Issue.objects.filter(id=issue_id, project__contributors__user=request.user).exists()
+
+        return Issue.objects.filter(
+            id=issue_id, project__contributors__user=request.user
+        ).exists()
 
     def has_object_permission(self, request, view, obj):
         project = obj.issue.project
