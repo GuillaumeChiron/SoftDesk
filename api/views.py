@@ -22,7 +22,9 @@ class ProjectViewset(ModelViewSet):
     permission_classes = [IsAuthenticated, IsProjectAuthorOrContributorReadOnly]
 
     def get_queryset(self):
-        return Project.objects.filter(contributors__user=self.request.user).order_by("-created_time")
+        return Project.objects.filter(contributors__user=self.request.user).order_by(
+            "-created_time"
+        )
 
     @transaction.atomic
     def perform_create(self, serializer):
@@ -36,7 +38,9 @@ class ContributorViewset(ModelViewSet):
     permission_classes = [IsAuthenticated, IsProjectAuthorForContributor]
 
     def get_queryset(self):
-        return Contributor.objects.filter(project__contributors__user=self.request.user).order_by("project__title")
+        return Contributor.objects.filter(
+            project__contributors__user=self.request.user
+        ).order_by("project__title")
 
 
 class IssueViewset(ModelViewSet):
@@ -44,7 +48,9 @@ class IssueViewset(ModelViewSet):
     permission_classes = [IsAuthenticated, IsIssueAuthorOrProjectContributorReadOnly]
 
     def get_queryset(self):
-        return Issue.objects.filter(project__contributors__user=self.request.user).order_by("-created_time")
+        return Issue.objects.filter(
+            project__contributors__user=self.request.user
+        ).order_by("-created_time")
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
