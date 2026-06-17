@@ -229,23 +229,3 @@ Un contributeur ne peut pas supprimer le createur du projet de la liste des cont
 Seul l'auteur d'une issue ou l'auteur du projet peut modifier ou supprimer une issue.
 Seul l'auteur d'un commentaire ou l'auteur du projet peut modifier ou supprimer un commentaire.
 ```
-
-## Commandes utiles
-
-Lancer les tests :
-
-```bash
-python manage.py test
-```
-
-Verifier les migrations a creer apres modification des modeles :
-
-```bash
-python manage.py makemigrations
-```
-
-Appliquer les migrations :
-
-```bash
-python manage.py migrate
-```
