@@ -72,16 +72,16 @@ class IssueSerializer(ModelSerializer):
         ]
         read_only_fields = ["author", "created_time"]
 
-        def validate(self, attrs):
-            project = attrs.get("project", self.instance.project if self.instance else None)
-            assign = attrs.get("assign", self.instance.assign if self.instance else None)
+    def validate(self, attrs):
+        project = attrs.get("project", self.instance.project if self.instance else None)
+        assign = attrs.get("assign", self.instance.assign if self.instance else None)
 
-            if assign and project and not project.contributors.filter(user=assign).exists():
-                raise ValidationError({
-                    "assign": "L'utilisateur assigné doit être contributeur du projet."
-                })
+        if assign and project and not project.contributors.filter(user=assign).exists():
+            raise ValidationError({
+                "assign": "L'utilisateur assigné doit être contributeur du projet."
+            })
 
-            return attrs
+        return attrs
 
 
 class CommentSerializer(ModelSerializer):
