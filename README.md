@@ -155,6 +155,9 @@ Les routes metier sont accessibles avec le prefixe `/api/`.
 
 Les commentaires possedent un champ `uuid`, mais les routes de detail utilisent l'identifiant interne `<id>`.
 
+Les routes de liste sont paginees par defaut avec 10 resultats par page.
+Le nombre de resultats par page peut etre ajuste avec le parametre `page_size`, dans la limite de 100 resultats.
+
 ### Champs principaux
 
 Creation d'un utilisateur :
@@ -226,6 +229,6 @@ Le createur d'un projet devient automatiquement contributeur du projet.
 Seul l'auteur d'un projet peut le modifier ou le supprimer.
 Seul l'auteur d'un projet peut ajouter, modifier ou supprimer ses contributeurs.
 Un contributeur ne peut pas supprimer le createur du projet de la liste des contributeurs.
-Seul l'auteur d'une issue ou l'auteur du projet peut modifier ou supprimer une issue.
-Seul l'auteur d'un commentaire ou l'auteur du projet peut modifier ou supprimer un commentaire.
+Seul l'auteur d'une issue peut la modifier ou la supprimer.
+Seul l'auteur d'un commentaire peut le modifier ou le supprimer.
 ```
