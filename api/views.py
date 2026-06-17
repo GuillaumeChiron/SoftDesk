@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from api.permissions import (
     IsProjectAuthorOrContributorReadOnly,
     IsIssueAuthorOrProjectContributorReadOnly,
-    IsCommentAuthorOrProjectAuthor,
+    IsCommentAuthorOrContributorReadOnly,
     IsProjectAuthorForContributor,
 )
 
@@ -52,7 +52,7 @@ class IssueViewset(ModelViewSet):
 
 class CommentViewset(ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsCommentAuthorOrProjectAuthor]
+    permission_classes = [IsAuthenticated, IsCommentAuthorOrContributorReadOnly]
 
     def get_queryset(self):
         return Comment.objects.filter(

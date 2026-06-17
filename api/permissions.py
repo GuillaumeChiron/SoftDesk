@@ -38,7 +38,7 @@ class IsIssueAuthorOrProjectContributorReadOnly(BasePermission):
         return obj.author == request.user
 
 
-class IsCommentAuthorOrProjectAuthor(BasePermission):
+class IsCommentAuthorOrContributorReadOnly(BasePermission):
 
     def has_permission(self, request, view):
         if request.method != "POST":
@@ -53,6 +53,9 @@ class IsCommentAuthorOrProjectAuthor(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         project = obj.issue.project
+
+        if request.method in SAFE_METHODS:
+            return project.contributors.filter(user=request.user).exists()
 
         return obj.author == request.user
 
