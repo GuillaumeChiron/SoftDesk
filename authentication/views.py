@@ -11,7 +11,7 @@ class UserViewset(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        queryset = User.objects.all()
+        queryset = User.objects.all().order_by("id")
         return queryset
 
     def get_permissions(self):

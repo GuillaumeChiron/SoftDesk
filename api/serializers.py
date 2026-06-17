@@ -54,7 +54,8 @@ class ProjectSerializer(ModelSerializer):
 
 class IssueSerializer(ModelSerializer):
 
-    author = UserSerializer(read_only=True)
+    author_name = CharField(source="author.username", read_only=True)
+    assign_name = CharField(source="assign.username", read_only=True)
 
     class Meta:
         model = Issue
@@ -67,10 +68,12 @@ class IssueSerializer(ModelSerializer):
             "status",
             "project",
             "author",
+            "author_name",
             "assign",
+            "assign_name",
             "created_time",
         ]
-        read_only_fields = ["author", "created_time"]
+        read_only_fields = ["author", "author_name", "assign_name", "created_time"]
 
     def validate(self, attrs):
         project = attrs.get("project", self.instance.project if self.instance else None)
@@ -86,9 +89,10 @@ class IssueSerializer(ModelSerializer):
 
 class CommentSerializer(ModelSerializer):
 
-    author = UserSerializer(read_only=True)
+    author_name = CharField(source="author.username", read_only=True)
+    issue_name = CharField(source="issue.title", read_only=True)
 
     class Meta:
         model = Comment
-        fields = ["uuid", "description", "author", "issue", "created_time"]
+        fields = ["uuid", "description", "author", "author_name", "issue", "issue_name", "created_time"]
         read_only_fields = ["author", "created_time"]
