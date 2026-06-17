@@ -13,6 +13,7 @@ class UserSerializer(ModelSerializer):
             "age",
             "can_be_contacted",
             "can_data_be_shared",
+            "date_joined",
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
