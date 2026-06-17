@@ -4,11 +4,12 @@ API Django REST Framework pour le projet SoftDesk.
 
 ## Prerequis
 
-- Python installe sur la machine
+- Python 3.13 installe sur la machine
 - `pip`
+- `pipenv`
 - Git, si vous clonez le projet depuis un depot distant
 
-Le projet utilise Django et Django REST Framework. Les dependances sont listees dans `requirements.txt`.
+Le projet utilise Django et Django REST Framework. Les dependances sont gerees avec Pipenv dans `Pipfile` et `Pipfile.lock`.
 
 ## Installation locale
 
@@ -18,31 +19,27 @@ Placez-vous dans le dossier du projet :
 cd softdesk
 ```
 
-Creez un environnement virtuel :
+Installez Pipenv si besoin :
 
 ```bash
-python -m venv env
+pip install pipenv
 ```
 
-Activez l'environnement virtuel.
-
-Sur Windows :
+Installez les dependances du projet :
 
 ```bash
-env\Scripts\activate
+pipenv install
 ```
 
-Sur macOS ou Linux :
+Activez l'environnement virtuel Pipenv si vous souhaitez lancer les commandes directement :
 
 ```bash
-source env/bin/activate
+pipenv shell
 ```
 
-Installez les dependances :
+Vous pouvez aussi lancer les commandes sans activer le shell avec `pipenv run`.
 
-```bash
-pip install -r requirements.txt
-```
+Pour installer aussi les dependances de developpement, utilisez `pipenv install --dev`.
 
 ## Base de donnees
 
@@ -51,13 +48,13 @@ Le projet utilise SQLite en local avec le fichier `db.sqlite3`.
 Appliquez les migrations :
 
 ```bash
-python manage.py migrate
+pipenv run python manage.py migrate
 ```
 
 Si besoin, creez un super-utilisateur pour acceder a l'administration Django :
 
 ```bash
-python manage.py createsuperuser
+pipenv run python manage.py createsuperuser
 ```
 
 ## Lancement du projet
@@ -65,7 +62,7 @@ python manage.py createsuperuser
 Demarrez le serveur de developpement :
 
 ```bash
-python manage.py runserver
+pipenv run python manage.py runserver
 ```
 
 Le projet sera disponible a l'adresse :

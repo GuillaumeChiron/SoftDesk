@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.11.1"
+django = "==6.0.5"
+django-filter = "==25.2"
+djangorestframework = "==3.17.1"
+djangorestframework-simplejwt = "==5.5.1"
+flake8 = "==7.3.0"
+markdown = "==3.10.2"
+mccabe = "==0.7.0"
+pycodestyle = "==2.14.0"
+pyflakes = "==3.4.0"
+pyjwt = "==2.13.0"
+sqlparse = "==0.5.5"
+tzdata = "==2026.2"
+
+[dev-packages]
+flake8 = "*"
+
+[requires]
+python_version = "3.13"
