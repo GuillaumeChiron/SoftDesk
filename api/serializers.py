@@ -82,9 +82,9 @@ class IssueSerializer(ModelSerializer):
         assign = attrs.get("assign", self.instance.assign if self.instance else None)
 
         if assign and project and not project.contributors.filter(user=assign).exists():
-            raise ValidationError({
-                "assign": "L'utilisateur assigné doit être contributeur du projet."
-            })
+            raise ValidationError(
+                {"assign": "L'utilisateur assigné doit être contributeur du projet."}
+            )
 
         return attrs
 
@@ -96,5 +96,14 @@ class CommentSerializer(ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ["id", "uuid", "description", "author", "author_name", "issue", "issue_name", "created_time"]
+        fields = [
+            "id",
+            "uuid",
+            "description",
+            "author",
+            "author_name",
+            "issue",
+            "issue_name",
+            "created_time",
+        ]
         read_only_fields = ["author", "author_name", "issue_name", "created_time"]
